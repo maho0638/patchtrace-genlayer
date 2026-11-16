@@ -1,0 +1,7 @@
+# Threat Model & Limits — PatchTrace
+
+1. **Self-reported evidence:** bug descriptions and hunk snippets are input by users. No GitHub or cryptographic repository provenance is verified. Hunk-to-symptom references are audit **hypotheses**, not proof of code execution, CI success, vulnerability remediation, legal compliance, or security certification.
+2. **Prompt injection:** stored descriptions and code snippets are bounded and quoted inside a JSON data envelope. Any textual command inside them is instructed to be treated as data. This reduces but does not eliminate model prompt injection.
+3. **Validator trust:** the custom equivalence function independently re-runs the same mapping prompt and requires agreement on every decisive symptom→hunk reference. It rejects non-`Return` results, unknown hunk IDs, missing/extra symptoms and malformed output. Consensus can still be mistaken if multiple validators share a blind spot.
+4. **State:** IDs are unique and bounded; mappings and inputs are hashed; traces cannot be repeated; acknowledgment is restricted to the issue owner, requires full mapping and may happen once. Multiple competing patches can be proposed before one is acknowledged.
+5. **Operational:** content is public and bounded (max four symptoms, five hunks). No private code, keys, secrets, wallet transfers, automatic patch application, software deployment or testnet fund movement. Reading a complete trace must not replace real CI or human code review.
