@@ -1,14 +1,27 @@
-# Proof status — patchtrace-genlayer
+# Verified evidence status — patchtrace-genlayer
 
-Verification snapshot: 2026-11-16.
+Last checked: **2026-11-16**. Public code in `main` corresponds to the Studio-tested contract source.
 
-- Python 3.13 `compileall`: **PASS**.
-- Offline pytest: **PASS (7/7)** on local Python 3.13 and same official GitHub Actions ubuntu-24.04 run.
-- Official GenLayer `genlayer-test` Direct Mode: **PASS (5/5)** on GitHub Actions run [43862447724](https://github.com/maho0638/patchtrace-genlayer/actions/runs/43862447724), using published `genlayer-test==0.29.2` with a v0.2.16 GenVM runner pin (no contract-result mocks beyond test fixture LLM responses).
-- GenVM lint: **PASS (3 checks)**, same GitHub Actions run [43862447724](https://github.com/maho0638/patchtrace-genlayer/actions/runs/43862447724).
-- Public Studionet signed deploy/consensus/readback: **NOT EXECUTED** (not authorized; no transaction submitted).
-- GitHub: **PUBLISHED** to https://github.com/maho0638/patchtrace-genlayer (all 11 source/test/docs files; fetched source equality confirmed).
-- Explorer contract address: **NONE**.
-- Portal submission: **NOT SUBMITTED**.
+## Complete automated QA
 
-The verified workflow was tested via isolated QA PR #2 and copied to main as **workflow_dispatch-only** (no auto-run, secret, signing or network transaction). The runner pin only selects a compatible official GenVM release; official contract test behavior is unchanged. **Signed StudioNet consensus/write/readback and Explorer proof have not been executed.** The visible Intelligent Contracts category does not explicitly require a live Explorer address; provide one only when genuinely deployed or specifically requested.
+- Python compilation: **PASS**.
+- Offline state-machine regression: **PASS 7/7**.
+- Official GenLayer Direct Mode SDK (real GenVM, controlled LLM response fixtures): **PASS 5/5**.
+- Official GenVM lint: **PASS**.
+- Official Direct Mode and lint report: https://github.com/maho0638/patchtrace-genlayer/actions/runs/43862447724
+
+## Actual hosted GenLayer Studionet
+
+- Network RPC: `https://studio.genlayer.com/api` — chain ID **61999 verified by JSON-RPC before transactions**.
+- Actual contract deployment: **PASS** — `0x5bda02f47FA5A822Bf560FDe6D25f8B6Ca6Ba1E7`.
+- Accepted on-network transactions: **PASS** — 3 write transactions plus the deployment, with readbacks.
+- Unmocked AI nondeterministic execution and validator consensus: **PASS** with `leader_only=false`.
+- GitHub free runner `ubuntu-24.04`: **PASS 1/1 integration acceptance test**.
+- Full real-network GitHub job and logs: https://github.com/maho0638/patchtrace-genlayer/actions/runs/43894417604
+- Exact transaction hashes, observed state and security limits: [STUDIONET_PROOF.md](STUDIONET_PROOF.md).
+
+## What this does and does not prove
+
+This is a **real hosted Studionet execution**, not a local host mock, Direct Mode only, or a claim about Bradbury/mainnet. The test used an ephemeral GenLayer SDK-generated sender, with no user wallet keys or GitHub secrets. No value transfers. Successful receipts and state readbacks were checked; **separate transaction finality was not checked**. Studionet can reset. No guaranteed Community Points or mainnet security audit is claimed.
+
+The deploy workflow in `main` is **manual-only** (`workflow_dispatch`), so commits/PRs cannot automatically redeploy or spend test resources. Portal submission: **NOT SUBMITTED**.
