@@ -11,11 +11,11 @@ from gltest import get_contract_factory, get_default_account
 from gltest.assertions import tx_execution_succeeded
 
 SYMPTOMS = (
-    "S1|Missing authentication token currently permits access to the private API\\n"
+    "S1|Missing authentication token currently permits access to the private API\n"
     "S2|Malformed credentials still reach protected route handlers"
 )
 HUNKS = (
-    "H1|src/auth.py|accept_none_token()|reject_none_token()\\n"
+    "H1|src/auth.py|accept_none_token()|reject_none_token()\n"
     "H2|src/routes.py|allow_if_present()|allow_if_verified()"
 )
 
@@ -25,7 +25,7 @@ def record(message):
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:
         with open(summary, "a", encoding="utf-8") as f:
-            f.write("- " + message + "\\n")
+            f.write("- " + message + "\n")
 
 
 def test_patchtrace_real_studionet():
