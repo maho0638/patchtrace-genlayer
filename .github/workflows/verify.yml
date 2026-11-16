@@ -1,7 +1,7 @@
 name: Verify Intelligent Contract (isolated QA, no network writes)
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, reopened]
     branches: [main]
 permissions:
   contents: read
