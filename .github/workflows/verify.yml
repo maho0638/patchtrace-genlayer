@@ -1,7 +1,7 @@
 name: Stable GenVM Direct & lint (QA only)
 on:
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
     branches: [main]
 permissions:
   contents: read
@@ -23,7 +23,8 @@ jobs:
         run: python -m compileall -q contracts tests
       - name: Offline state-machine regression
         run: python -m pytest -q tests/offline
-      - name: GenVM lint
-        run: genvm-lint check contracts/*.py
       - name: Official GenLayer SDK Direct tests
         run: python -m pytest -q tests/sdk
+      - name: GenVM lint
+        if: always()
+        run: genvm-lint check contracts/*.py
