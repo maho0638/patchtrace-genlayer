@@ -11,4 +11,4 @@ Verification snapshot: 2026-11-16.
 - Explorer contract address: **NONE**.
 - Portal submission: **NOT SUBMITTED**.
 
-The verified workflow was tested via isolated QA PR #2 and copied to main as **workflow_dispatch-only** (no auto-run, secret, signing or network transaction). The runner pin only selects a compatible official GenVM release; official contract test behavior is unchanged. **Signed StudioNet consensus/write/readback and Explorer proof remain required before Portal submission.**
+The verified workflow was tested via isolated QA PR #2 and copied to main as **workflow_dispatch-only** (no auto-run, secret, signing or network transaction). The runner pin only selects a compatible official GenVM release; official contract test behavior is unchanged. **Signed StudioNet consensus/write/readback and Explorer proof have not been executed.** The visible Intelligent Contracts category does not explicitly require a live Explorer address; provide one only when genuinely deployed or specifically requested.
