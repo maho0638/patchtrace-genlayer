@@ -88,7 +88,8 @@ class PatchTrace(gl.Contract):
     patches: TreeMap[str, str]
 
     def __init__(self):
-        pass
+        self.issues = TreeMap()
+        self.patches = TreeMap()
 
     @gl.public.write
     def open_issue(self, issue_id: str, title: str, symptoms_manifest: str) -> None:
