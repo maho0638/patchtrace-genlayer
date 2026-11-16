@@ -1,7 +1,7 @@
 name: Studionet end-to-end (isolated QA, network writes)
 on:
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
     branches: [main]
 permissions:
   contents: read
@@ -17,16 +17,31 @@ jobs:
       - name: Verify canonical Studionet RPC and chain ID before any writes
         run: |
           python - <<'PY'
-          import json, urllib.request
+          import json, urllib.request, urllib.error
           rpc="https://studio.genlayer.com/api"
           payload=json.dumps({"jsonrpc":"2.0","id":1,"method":"eth_chainId","params":[]}).encode()
-          req=urllib.request.Request(rpc,data=payload,headers={"Content-Type":"application/json"})
-          with urllib.request.urlopen(req,timeout=20) as f:
-              result=json.load(f)
-          if "error" in result: raise RuntimeError("Studionet returned RPC error: "+str(result["error"]))
-          chain=int(result["result"],16)
-          print("Studio chain ID:",chain)
-          if chain!=61999: raise RuntimeError("Network identity mismatch; refusing to sign or deploy")
+          # Both requests use the official canonical endpoint; no proxies or credentials.
+          cases=[
+            ("official_sdk_headers",{"Content-Type":"application/json","Accept":"application/json","User-Agent":"genlayer-py/0.16.3"}),
+            ("official_studio_origin",{"Content-Type":"application/json","Accept":"application/json","Origin":"https://studio.genlayer.com","Referer":"https://studio.genlayer.com/"})
+          ]
+          valid=False
+          for label,headers in cases:
+              req=urllib.request.Request(rpc,data=payload,headers=headers)
+              try:
+                  with urllib.request.urlopen(req,timeout=20) as response:
+                      result=json.load(response)
+                  if "error" in result: raise RuntimeError(str(result["error"]))
+                  chain=int(result["result"],16)
+                  print(label,"verified chain",chain)
+                  if chain != 61999: raise RuntimeError("Wrong chain ID; refusing all signing")
+                  valid=True
+                  break
+              except urllib.error.HTTPError as e:
+                  body=e.read(250).decode("utf-8","replace")
+                  print(label,"HTTP",e.code,"body prefix:",repr(body))
+                  if e.code not in (400,403,404,405): raise
+          if not valid: raise RuntimeError("Canonical Studionet RPC not accessible from GitHub runner; no transactions attempted")
           PY
       - name: Install pinned official GenLayer Studio test SDK
         run: python -m pip install 'genlayer-py==0.16.3' 'genlayer-test==0.29.2' 'pytest>=8,<9'
