@@ -1,4 +1,4 @@
-# Portal draft — DO NOT SUBMIT WITHOUT LIVE PROOF
+# Portal submission text — source + official Direct Mode QA verified
 
 **Category:** Developer → Intelligent Contracts
 
@@ -8,4 +8,4 @@
 
 PatchTrace introduces an auditable GenLayer primitive that links individual software bug symptoms to concrete code-change hunks. A maintainer freezes up to four numbered symptoms; a contributor supplies up to five before/after snippets. The GenLayer leader proposes a symptom-to-hunk mapping, and validators independently remap each symptom under a custom Equivalence Principle. Unknown references and incomplete outputs are rejected. Uncovered symptoms remain explicit; only a fully mapped patch can be acknowledged by the original issue owner. Inputs, witness references and SHA-256 commitments are stored on-chain. Unlike a three-label classification or API schema comparison, the output is a verifiable mapping graph. This is traceability, not proof that code compiled, tests passed or a bug was actually fixed.
 
-**Required evidence:** GitHub repository URL; matching-source GenLayer Explorer contract URL; optional SDK/lint workflow and signed end-to-end test link. **None is claimed live yet.**
+**Evidence:** Public GitHub source and reproducible official GenLayer Direct Mode + GenVM lint test report: https://github.com/maho0638/patchtrace-genlayer/actions/runs/43862447724 . No live Studionet deployment or Explorer address has been verified; supply an Explorer link only if the review explicitly requires a signed network deployment.
