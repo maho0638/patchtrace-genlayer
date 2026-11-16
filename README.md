@@ -59,7 +59,7 @@ These are **offline host-mock** regression tests, not real GenVM execution. For 
 
 - Offline state-machine tests: see [`docs/PROOF_STATUS.md`](docs/PROOF_STATUS.md).
 - **Official GenLayer Direct Mode: PASS (5/5)** and **GenVM lint: PASS** on [GitHub Actions #43862447724](https://github.com/maho0638/patchtrace-genlayer/actions/runs/43862447724); offline regression 7/7 PASS. 
-- Live Studionet signed deployment and on-chain Explorer URL: **NOT YET EXECUTED / UNAVAILABLE**.
-- Public repository and verified GenLayer Direct Mode/lint run are available as review evidence. A live Explorer deployment can be supplied if explicitly requested; no address is claimed without a real signed transaction.
+- Real hosted Studionet deployment, unmocked AI consensus, accepted write transactions, and readbacks: **PASS** on [GitHub Actions run #43894417604](https://github.com/maho0638/patchtrace-genlayer/actions/runs/43894417604).
+- Studionet contract: `0x5bda02f47FA5A822Bf560FDe6D25f8B6Ca6Ba1E7`. Exact transaction receipts and outputs: [Studionet proof](docs/STUDIONET_PROOF.md). A separately verified Explorer deep link is not claimed.
 
-See [`SUBMISSION_DRAFT.md`](SUBMISSION_DRAFT.md) when live evidence exists. No promise of Community Points or mainnet readiness.
+See [`SUBMISSION_DRAFT.md`](SUBMISSION_DRAFT.md) for Portal-ready evidence and wording. No promise of Community Points or mainnet readiness.
